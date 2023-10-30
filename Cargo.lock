@@ -214,6 +214,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6fb8d784f27acf97159b40fc4db5ecd8aa23b9ad5ef69cdd136d3bc80665f0c0"
 
 [[package]]
+name = "gpt-cli"
+version = "0.1.0"
+dependencies = [
+ "hyper",
+ "hyper-tls",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "spinners",
+ "tokio",
+]
+
+[[package]]
 name = "h2"
 version = "0.3.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -579,19 +592,6 @@ dependencies = [
  "getrandom",
  "redox_syscall 0.2.16",
  "thiserror",
-]
-
-[[package]]
-name = "req-ai"
-version = "0.1.0"
-dependencies = [
- "hyper",
- "hyper-tls",
- "serde",
- "serde_derive",
- "serde_json",
- "spinners",
- "tokio",
 ]
 
 [[package]]

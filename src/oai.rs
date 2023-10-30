@@ -48,7 +48,7 @@ pub fn create_oai_request(user_input: &str) -> OAIRequest {
     };
     OAIRequest {
         messages: vec![user_message],
-        max_tokens: 100,
+        max_tokens: 300,
         model: String::from("gpt-3.5-turbo"),
     }
 }
