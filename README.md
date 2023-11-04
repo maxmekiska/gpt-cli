@@ -1,12 +1,14 @@
 # gpt-cli
 
-CLI to interact with OpenAIs ChatGPT model - `gpt-3.5-turbo`. The CLI does not retain memory. Every question to ChatGPT needs to be seen as an independent request.
+CLI to interact with OpenAIs ChatGPT model - `gpt-3.5-turbo`.
 
 ## Prerequisite  
 
 Add your OpenAI API key to the following env variable `OPENAI_API_KEY`.
 
 ## How to use? - Windows
+
+### Installation
 
 1. clone this repo
 2. build the CLI .exe via `cargo build --release`
@@ -18,8 +20,29 @@ Add your OpenAI API key to the following env variable `OPENAI_API_KEY`.
     - Edit
     - New
     - add path to the `release` directory which contains the .exe
-4. launch cmd or powershell and type: `gpt-cli` to activate the program
-5. you can exit the program by typing `exit`
+4. launch cmd or powershell and type: `gpt-cli.exe` to activate the program
+
+### Commands
+
+#### `exit`
+
+- will terminate the conversation
+
+#### `clear`
+
+- clears the whole chat history. The conversation will start from scratch.
+
+#### `undo`
+
+- will remove the last request and answer from the chat history.
+
+#### `log`
+
+- will activate logging. Each request will print the current chat history
+
+#### `deactivate log`
+
+- will deactivate logging.
 
 <br>
 

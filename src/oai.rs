@@ -4,10 +4,10 @@ use hyper_tls::HttpsConnector;
 use serde_derive::{Deserialize, Serialize};
 
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Clone, Debug)]
 pub struct OAIMessage {
-    role: String,
-    content: String,
+    pub role: String,
+    pub content: String,
 }
 
 #[derive(Deserialize, Debug)]
@@ -35,19 +35,15 @@ pub struct OAIResponse {
 
 #[derive(Serialize, Debug)]
 pub struct OAIRequest {
-    messages: Vec<OAIMessage>,
-    max_tokens: u32,
-    model: String,
+    pub messages: Vec<OAIMessage>,
+    pub max_tokens: u32,
+    pub model: String,
 }
 
 
-pub fn create_oai_request(user_input: &str) -> OAIRequest {
-    let user_message = OAIMessage {
-        role: String::from("user"),
-        content: String::from(user_input)
-    };
+pub fn create_oai_request(chat_history: &Vec<OAIMessage>) -> OAIRequest {
     OAIRequest {
-        messages: vec![user_message],
+        messages: chat_history.clone(),
         max_tokens: 300,
         model: String::from("gpt-3.5-turbo"),
     }
