@@ -6,6 +6,7 @@ mod oai;
 mod interact;
 
 use std::env;
+use spinners::{Spinner, Spinners};
 
 use oai::{create_oai_request, send_request, OAIMessage};
 use interact::{get_user_input, special_commands};
@@ -49,11 +50,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         };
         chat_history.push(user_message);
 
+        let mut spin = Spinner::new(Spinners::Pipe, String::new());
+
         let oai_request = create_oai_request(&chat_history);
 
 
         match send_request(uri, &auth_header_val, &oai_request).await {
             Ok(json) => {
+                spin.stop_with_symbol("<\x1b[32m>\x1b[0m");
                 let ai_response = json.choices[0].message.content.clone();
                 println!("{}", ai_response);
 
@@ -64,10 +68,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
                 chat_history.push(ai_message);
             }
             Err(err) => {
+                spin.stop_with_symbol("<\x1b[31m>\x1b[0m");
                 eprintln!("Error: {:?}", err);
             }
         }
-        println!{"log status: {:?}", logging}
         if logging { 
             info!("Chat History: {:?}", chat_history);
         }
