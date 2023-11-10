@@ -38,14 +38,35 @@ pub struct OAIRequest {
     pub messages: Vec<OAIMessage>,
     pub max_tokens: u32,
     pub model: String,
+    pub temperature: f32,
 }
 
+//pub fn create_oai_request(chat_history: &Vec<OAIMessage>) -> OAIRequest {
+    //OAIRequest {
+        //messages: chat_history.clone(),
+        //max_tokens: 300,
+        //model: String::from("gpt-3.5-turbo"),
+        //temperature: f32,
+    //}
+//}
 
-pub fn create_oai_request(chat_history: &Vec<OAIMessage>) -> OAIRequest {
+impl Default for OAIRequest {
+    fn default() -> Self {
+        OAIRequest {
+            messages: Vec::new(),
+            max_tokens: 300,
+            model: String::from("gpt-3.5-turbo"),
+            temperature: 0.2,
+        }
+    }
+}
+
+pub fn create_oai_request(chat_history: &Vec<OAIMessage>, max_tokens: Option<u32>, model: Option<String>, temperature: Option<f32>) -> OAIRequest {
     OAIRequest {
         messages: chat_history.clone(),
-        max_tokens: 300,
-        model: String::from("gpt-3.5-turbo"),
+        max_tokens: max_tokens.unwrap_or_default(),
+        model: model.unwrap_or_default(),
+        temperature: temperature.unwrap_or_default(),
     }
 }
 

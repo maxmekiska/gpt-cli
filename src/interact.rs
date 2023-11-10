@@ -27,14 +27,6 @@ pub fn special_commands(user_input: &str, chat_history: &mut Vec<OAIMessage>) ->
             println!("Undone last user input and assistant response.");
             return 2;
         }
-        "log" => {
-            println!("Logging activated.");
-            return 3;
-        }
-        "deactivate log" => {
-            println!("Logging deactivated.");
-            return 4;
-        }
         _ => {
             return 0;
         }
