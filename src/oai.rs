@@ -41,14 +41,6 @@ pub struct OAIRequest {
     pub temperature: f32,
 }
 
-//pub fn create_oai_request(chat_history: &Vec<OAIMessage>) -> OAIRequest {
-    //OAIRequest {
-        //messages: chat_history.clone(),
-        //max_tokens: 300,
-        //model: String::from("gpt-3.5-turbo"),
-        //temperature: f32,
-    //}
-//}
 
 impl Default for OAIRequest {
     fn default() -> Self {

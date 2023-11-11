@@ -1,6 +1,6 @@
 # gpt-cli
 
-CLI to interact with OpenAIs ChatGPT model - `gpt-3.5-turbo`.
+CLI to interact with OpenAIs ChatGPT models.
 
 ## Prerequisite  
 
@@ -36,13 +36,6 @@ Add your OpenAI API key to the following env variable `OPENAI_API_KEY`.
 
 - will remove the last request and answer from the chat history.
 
-#### `log`
-
-- will activate logging. Each request will print the current chat history
-
-#### `deactivate log`
-
-- will deactivate logging.
 
 <br>
 
