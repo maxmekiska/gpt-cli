@@ -1,18 +1,13 @@
 use log::{info, error};
-use env_logger;
 
 use std::env;
 use spinners::{Spinner, Spinners};
-
 
 use crate::oai::{create_oai_request, send_request, OAIMessage};
 use crate::interact::{get_user_input, special_commands};
 
 
 pub async fn run_chat(max_tokens: Option<u32>, model: Option<String>, temperature: Option<f32>, logging: Option<bool>) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    env_logger::builder()
-        .filter_level(log::LevelFilter::Debug)
-        .init();
 
     let uri = "https://api.openai.com/v1/chat/completions";
     let oai_token: String = env::var("OPENAI_API_KEY").unwrap();
@@ -41,7 +36,7 @@ pub async fn run_chat(max_tokens: Option<u32>, model: Option<String>, temperatur
 
         match send_request(uri, &auth_header_val, &oai_request).await {
             Ok(json) => {
-                spin.stop_with_symbol("<\x1b[32m>\x1b[0m");
+                spin.stop_with_symbol(">\x1b[32m<\x1b[0m");
                 let ai_response = json.choices[0].message.content.clone();
                 println!("{}", ai_response);
 
@@ -52,9 +47,11 @@ pub async fn run_chat(max_tokens: Option<u32>, model: Option<String>, temperatur
                 chat_history.push(ai_message);
             }
             Err(err) => {
-                spin.stop_with_symbol("<\x1b[31m>\x1b[0m");
-                eprintln!("Error: Please ensure to set the env var OPENAI_API_KEY with a valid API key.");
-                error!("Error: {:?}\n", err);
+                spin.stop_with_symbol(">\x1b[31m<\x1b[0m");
+                eprintln!("\x1b[31mError: Please ensure to set the env var OPENAI_API_KEY with a valid API key.\x1b[0m");
+                if logging == Some(true) {
+                    error!("Error: {:?}\n", err);
+                }
             }
         }
         if logging == Some(true) {

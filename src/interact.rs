@@ -2,6 +2,7 @@ use std::io::{stdin, stdout, Write};
 
 use crate::oai::OAIMessage;
 
+
 pub fn get_user_input() -> String {
     print!("> ");
     stdout().flush().unwrap();
@@ -9,6 +10,7 @@ pub fn get_user_input() -> String {
     stdin().read_line(&mut user_text).expect("Failed to read line");
     user_text
 }
+
 
 pub fn special_commands(user_input: &str, chat_history: &mut Vec<OAIMessage>) -> u8 {
     match user_input.trim().to_lowercase().as_str() {

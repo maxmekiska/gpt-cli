@@ -1,4 +1,3 @@
-use log::{info, error};
 use env_logger;
 
 mod oai;
@@ -10,17 +9,16 @@ mod oneshotroutine;
 use clap::{Parser, Subcommand};
 
 
-
 #[derive(Parser)]
 #[command(name = "gpt-cli")]
 #[command(author = "Max Mekiska. <maxmekiska@gmail.com>")]
 #[command(version = "0.2.0")]
 #[command(about = "CLI to interact with OpenAi LLMs.", long_about = None)]
 struct Args {
-
     #[command(subcommand)]
     command: Option<Commands>,
 }
+
 
 #[derive(Subcommand)]
 enum Commands {
@@ -65,6 +63,9 @@ enum Commands {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    env_logger::builder()
+        .filter_level(log::LevelFilter::Debug)
+        .init();
 
     let args = Args::parse();
 

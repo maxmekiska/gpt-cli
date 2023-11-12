@@ -10,11 +10,13 @@ pub struct OAIMessage {
     pub content: String,
 }
 
+
 #[derive(Deserialize, Debug)]
 pub struct OAIResMessage {
     role: String,
     pub content: String,
 }
+
 
 #[derive(Deserialize, Debug)]
 pub struct OAIChoices {
@@ -23,6 +25,7 @@ pub struct OAIChoices {
     logprobs: Option<u8>,
     finnish_reason: Option<String>,
 }
+
 
 #[derive(Deserialize, Debug)]
 pub struct OAIResponse {
@@ -33,6 +36,7 @@ pub struct OAIResponse {
     pub choices: Vec<OAIChoices>,
 }
 
+
 #[derive(Serialize, Debug)]
 pub struct OAIRequest {
     pub messages: Vec<OAIMessage>,
@@ -42,17 +46,6 @@ pub struct OAIRequest {
 }
 
 
-impl Default for OAIRequest {
-    fn default() -> Self {
-        OAIRequest {
-            messages: Vec::new(),
-            max_tokens: 300,
-            model: String::from("gpt-3.5-turbo"),
-            temperature: 0.2,
-        }
-    }
-}
-
 pub fn create_oai_request(chat_history: &Vec<OAIMessage>, max_tokens: Option<u32>, model: Option<String>, temperature: Option<f32>) -> OAIRequest {
     OAIRequest {
         messages: chat_history.clone(),
@@ -61,6 +54,7 @@ pub fn create_oai_request(chat_history: &Vec<OAIMessage>, max_tokens: Option<u32
         temperature: temperature.unwrap_or_default(),
     }
 }
+
 
 pub async fn send_request(uri: &str, auth_header_val: &str, oai_request: &OAIRequest) -> Result<OAIResponse, Box<dyn std::error::Error + Send + Sync>> {
     let https = HttpsConnector::new();
@@ -72,6 +66,11 @@ pub async fn send_request(uri: &str, auth_header_val: &str, oai_request: &OAIReq
         .body(body)
         .unwrap();
     let res = client.request(req).await?;
+
+    if !res.status().is_success() {
+        return Err(format!("OpenAI Request failed with status: {}", res.status()).into());
+    }
+
     let body = hyper::body::aggregate(res).await?;
     let json: OAIResponse = serde_json::from_reader(body.reader())?;
     Ok(json)
