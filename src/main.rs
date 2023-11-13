@@ -9,6 +9,19 @@ mod oneshotroutine;
 use clap::{Parser, Subcommand};
 
 
+fn configure_logging(logging_enabled: bool) {
+    if logging_enabled {
+        env_logger::builder()
+            .filter_level(log::LevelFilter::Debug)
+            .init();
+    } else {
+        env_logger::builder()
+            .filter_level(log::LevelFilter::Off)
+            .init();
+    }
+}
+
+
 #[derive(Parser)]
 #[command(name = "gpt-cli")]
 #[command(author = "Max Mekiska. <maxmekiska@gmail.com>")]
@@ -56,20 +69,19 @@ enum Commands {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    env_logger::builder()
-        .filter_level(log::LevelFilter::Debug)
-        .init();
 
     let args = Args::parse();
 
     match &args.command {
 
         Some(Commands::OneShot { prompt, max_tokens, gpt_model, temperature, logging }) => {
-            oneshotroutine::one_shot(prompt.to_string(), Some(*max_tokens), Some(gpt_model.to_string()), Some(*temperature), Some(*logging)).await
+            configure_logging(*logging);
+            oneshotroutine::one_shot(prompt.to_string(), Some(*max_tokens), Some(gpt_model.to_string()), Some(*temperature)).await
         },
 
         Some(Commands::Chat { max_tokens, gpt_model, temperature, logging }) => {
-            chatroutine::run_chat(Some(*max_tokens), Some(gpt_model.to_string()), Some(*temperature), Some(*logging)).await
+            configure_logging(*logging);
+            chatroutine::run_chat(Some(*max_tokens), Some(gpt_model.to_string()), Some(*temperature)).await
         }
         None => Ok({})
     }

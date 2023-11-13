@@ -6,7 +6,7 @@ use spinners::{Spinner, Spinners};
 use crate::oai::{create_oai_request, send_request, OAIMessage};
 
 
-pub async fn one_shot(user_input: String, max_tokens: Option<u32>, model: Option<String>, temperature: Option<f32>, logging: Option<bool>) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+pub async fn one_shot(user_input: String, max_tokens: Option<u32>, model: Option<String>, temperature: Option<f32>) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     let uri = "https://api.openai.com/v1/chat/completions";
     let oai_token: String = env::var("OPENAI_API_KEY").unwrap();
@@ -33,16 +33,12 @@ pub async fn one_shot(user_input: String, max_tokens: Option<u32>, model: Option
         Err(err) => {
             spin.stop_with_symbol(">\x1b[31m<\x1b[0m");
             eprintln!("\x1b[31mError: Please ensure to set the env var OPENAI_API_KEY with a valid API key.\x1b[0m");
-            if logging == Some(true) {
-                error!("Error: {:?}\n", err);
-            }
+            error!("Error: {:?}\n", err);
         }
     }
-    if logging == Some(true) {
-        info!("Chat History: {:?}\n", chat_history);
-        info!("Max Tokens: {:?}\n", max_tokens);
-        info!("Temperatur: {:?}\n", temperature);
-        info!("GPT Model: {:?}\n", model);
-    }
+    info!("Chat History: {:?}\n", chat_history);
+    info!("Max Tokens: {:?}\n", max_tokens);
+    info!("Temperatur: {:?}\n", temperature);
+    info!("GPT Model: {:?}\n", model);
 Ok(())
 }
