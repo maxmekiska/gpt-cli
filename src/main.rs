@@ -22,42 +22,35 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Commands {
-
     OneShot {
-        
-        #[arg(short, long)]
+        #[arg(short, long, help = "The prompt for the model.")]
         prompt: String,
 
-        #[arg(short, long, default_value_t = 300)]
+        #[arg(short, long, default_value_t = 300, help = "The maximum number of tokens the response should have.")]
         max_tokens: u32,
 
-        #[arg(short, long, default_value_t = String::from("gpt-3.5-turbo"))]
+        #[arg(short, long, default_value_t = String::from("gpt-3.5-turbo"), help = "The GPT model to use.")]
         gpt_model: String,
 
-        #[arg(short, long, default_value_t = 0.2)]
+        #[arg(short, long, default_value_t = 0.2, help = "The temperature for sampling.")]
         temperature: f32,
 
-        #[arg(short, long, action)]
+        #[arg(short, long, action, help = "Enable logging.")]
         logging: bool,
-
     },
-
     Chat {
-        
-        #[arg(short, long, default_value_t = 300)]
+        #[arg(short, long, default_value_t = 300, help = "The maximum number of tokens the response should have.")]
         max_tokens: u32,
 
-        #[arg(short, long, default_value_t = String::from("gpt-3.5-turbo"))]
+        #[arg(short, long, default_value_t = String::from("gpt-3.5-turbo"), help = "The GPT model to use.")]
         gpt_model: String,
 
-        #[arg(short, long, default_value_t = 0.2)]
+        #[arg(short, long, default_value_t = 0.2, help = "The temperature for sampling.")]
         temperature: f32,
 
-        #[arg(short, long, action)]
+        #[arg(short, long, action, help = "Enable logging.")]
         logging: bool,
-
     },
-    
 }
 
 
