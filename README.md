@@ -58,7 +58,7 @@ This will launch `gpt-cli` in chat mode. Your GPT assistant will keep track of y
 
 ### `gpt-cli one-shot`
 
-This will allow to perform a one prompt interaction. This mode exptects the `--prompt` (`-p`) flag.
+This will allow to perform a one prompt interaction. This mode expects a set `--prompt` (`-p`) flag.
 
 #### Parameters
 
