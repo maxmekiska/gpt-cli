@@ -4,7 +4,7 @@ use crate::oai::OAIMessage;
 
 
 pub fn get_user_input() -> String {
-    print!("> ");
+    print!("\x1b[96m>\x1b[0m ");
     stdout().flush().unwrap();
     let mut user_text = String::new();
     stdin().read_line(&mut user_text).expect("Failed to read line");

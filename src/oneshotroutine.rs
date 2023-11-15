@@ -26,12 +26,12 @@ pub async fn one_shot(user_input: String, max_tokens: Option<u32>, model: Option
 
     match send_request(uri, &auth_header_val, &oai_request).await {
         Ok(json) => {
-            spin.stop_with_symbol(">\x1b[32m<\x1b[0m");
+            spin.stop_with_symbol("\x1b[96m>\x1b[0m\x1b[32m<\x1b[0m");
             let ai_response = json.choices[0].message.content.clone();
             println!("{}", ai_response);
         }
         Err(err) => {
-            spin.stop_with_symbol(">\x1b[31m<\x1b[0m");
+            spin.stop_with_symbol("\x1b[96m>\x1b[0m\x1b[31m<\x1b[0m");
             eprintln!("\x1b[31mError: Please ensure to set the env var OPENAI_API_KEY with a valid API key.\x1b[0m");
             error!("Error: {:?}\n", err);
         }
