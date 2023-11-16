@@ -55,6 +55,9 @@ This will launch `gpt-cli` in chat mode. Your GPT assistant will keep track of y
 ![gpt-cli-chat](assets/gpt-cli-chat-help.png)
 
 
+#### Demo
+
+![gpt-cli-chat-demo](assets/gpt-cli-chat-demo.png)
 
 ### `gpt-cli one-shot`
 
@@ -64,6 +67,11 @@ This will allow to perform a one prompt interaction. This mode expects a set `--
 
 
 ![gpt-cli-one-shot](assets/gpt-cli-one-shot-help.png)
+
+
+#### Demo
+
+![gpt-cli-one-shot-demo](assets/gpt-cli-one-shot-demo.png)
 
 
 <br>
