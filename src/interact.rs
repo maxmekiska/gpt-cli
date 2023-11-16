@@ -8,7 +8,7 @@ pub fn get_user_input() -> String {
     stdout().flush().unwrap();
     let mut user_text = String::new();
     stdin().read_line(&mut user_text).expect("Failed to read line");
-    user_text
+    return user_text
 }
 
 
@@ -32,5 +32,51 @@ pub fn special_commands(user_input: &str, chat_history: &mut Vec<OAIMessage>) ->
         _ => {
             return 0;
         }
+    }
+}
+
+
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_special_commands_exit() {
+        let mut chat_history = Vec::new();
+        assert_eq!(special_commands("exit", &mut chat_history), 1);
+    }
+
+    #[test]
+    fn test_special_commands_clear() {
+        let mut chat_history = vec![OAIMessage {
+            role: String::from("User"),
+            content: String::from("Hello!"),
+        }];
+        assert_eq!(special_commands("clear", &mut chat_history), 2);
+        assert_eq!(chat_history.len(), 0);
+    }
+
+    #[test]
+    fn test_special_commands_undo() {
+        let mut chat_history = vec![
+            OAIMessage {
+                role: String::from("User"),
+                content: String::from("Hello!"),
+            },
+            OAIMessage {
+                role: String::from("Assistant"),
+                content: String::from("Hi there!"),
+            },
+        ];
+        assert_eq!(special_commands("undo", &mut chat_history), 2);
+        assert_eq!(chat_history.len(), 0);
+    }
+
+    #[test]
+    fn test_special_commands_default() {
+        let mut chat_history = Vec::new();
+        assert_eq!(special_commands("other", &mut chat_history), 0);
     }
 }
